@@ -60,7 +60,9 @@ function createUIReceiver(): IReceiver {
       });
     },
     remove: function(id) {
-
+      if (id in dockarea) {
+        // TODO: remove.
+      }
     },
     dispose: function() {
 
