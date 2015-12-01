@@ -47,9 +47,11 @@ export
 function createUIReceiver(): IReceiver {
   return {
     add: function(extension: IExtension) {
+      console.log("UI Receiver add called...");
       if (extension.item && extension.item.hasOwnProperty('items')) {
         let items = extension.item.items;
         for (let i = 0; i < items.length; ++i) {
+          console.log("UI Receiver adding item to dockarea");
           dockarea.insertRight(items[i]);
         }
       }
