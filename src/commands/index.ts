@@ -67,7 +67,8 @@ function createCommandReceiver(): IReceiver {
     },
     dispose: function() {
       // TODO
-    }
+    },
+    isDisposed: false
   };
 
 }

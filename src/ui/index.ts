@@ -19,9 +19,9 @@ import {
   IExtension, IReceiver
 } from 'phosphor-plugins';
 
-import {
-  Tab
-} from 'phosphor-tabs';
+// import {
+//   Tab
+// } from 'phosphor-tabs';
 
 import {
   Widget
@@ -33,11 +33,11 @@ import './index.css';
 /**
  * The interface for `ui` extension point.
  */
-export
-interface IUIExtension {
-  items: Widget[];
-  tabs: Tab[];
-}
+// export
+// interface IUIExtension {
+//   items: Widget[];
+//   tabs: Tab[];
+// }
 
 
 /**
@@ -49,10 +49,8 @@ function createUIReceiver(): IReceiver {
     add: function(extension: IExtension) {
       if (extension.item && extension.item.hasOwnProperty('items')) {
         let items = extension.item.items;
-        let tabs = extension.item.tabs;
         for (let i = 0; i < items.length; ++i) {
-          DockPanel.setTab(items[i], tabs[i]);
-          dockarea.addWidget(items[i]);
+          dockarea.insertRight(items[i]);
         }
       }
       return new DisposableDelegate(() => {
@@ -66,7 +64,8 @@ function createUIReceiver(): IReceiver {
     },
     dispose: function() {
 
-    }
+    },
+    isDisposed: false
   }
 }
 
