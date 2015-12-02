@@ -53,17 +53,17 @@
   "phosphor-plugin": {
     "extensionPoints": [
       {
-        "module": "lib/menus/index",
+        "main": "lib/menus/index",
         "id": "menus:main",
         "factory": "createMenuReceiver"
       },
       {
-        "module": "lib/ui/index",
+        "main": "lib/ui/index",
         "id": "ui:main",
         "factory": "createUIReceiver"
       },
       {
-        "module": "lib/commands/index",
+        "main": "lib/commands/index",
         "id": "commands:main",
         "factory": "createCommandReceiver"
       }
