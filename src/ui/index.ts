@@ -51,10 +51,10 @@ function createUIReceiver(): IReceiver {
       console.log("UI item: " + extension.item);
       if (extension.item && extension.item.hasOwnProperty('item')) {
         console.log('adding...');
-        let items = extension.item.items;
-        for (let i = 0; i < items.length; ++i) {
+        //let items = extension.item.items;
+        for (let i = 0; i < extension.item.length; ++i) {
           console.log("UI Receiver adding item to dockarea");
-          dockarea.insertRight(items[i]);
+          dockarea.insertRight(extension.item[i]);
         }
       }
       return new DisposableDelegate(() => {
