@@ -52,6 +52,7 @@ function createMenuReceiver(): IReceiver {
   if (!('main' in menuMap)) {
     menuMap['main'] = new MenuExtensionPoint('main');
   }
+  menuMap['main'].initialize(document.body);
   return menuMap['main'];
 }
 
