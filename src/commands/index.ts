@@ -72,32 +72,7 @@ function createCommandReceiver(): IReceiver {
   };
 
 }
-//   if (extension.item && extension.item.hasOwnProperty('id')) {
-//     let id = extension.item.id;
-//     if (id in commandMap) {
-//       throw new Error('Command already exists');
-//     }
-//     commandMap[id] = extension.item;
-//     return new DisposableDelegate(() => {
-//       delete commandMap[id];
-//     });
-//   }
-// }
 
-
-/**
- * The initializer for the `command:main` extension point.
- */
-// export
-// function initializeMain(): Promise<IDisposable> {
-//   commandMap = {};
-//   var disposable = new DisposableDelegate(() => {
-//     for (var item in commandMap) {
-//       delete commandMap[item];
-//     }
-//   });
-//   return Promise.resolve(disposable);
-// }
 
 /**
  * The invoker for the `command:invoke` extension point.

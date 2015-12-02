@@ -19,25 +19,11 @@ import {
   IExtension, IReceiver
 } from 'phosphor-plugins';
 
-// import {
-//   Tab
-// } from 'phosphor-tabs';
-
 import {
   Widget
 } from 'phosphor-widget';
 
 import './index.css';
-
-
-/**
- * The interface for `ui` extension point.
- */
-// export
-// interface IUIExtension {
-//   items: Widget[];
-//   tabs: Tab[];
-// }
 
 
 /**
@@ -47,15 +33,8 @@ export
 function createUIReceiver(): IReceiver {
   return {
     add: function(extension: IExtension) {
-      //console.log("UI Receiver 'add' called..." + Object.keys(extension).toString());
-      console.log("UI item: " + extension.item);
-      if (extension.item) {
-        console.log('adding...');
-        //let items = extension.item.items;
-        for (let i = 0; i < extension.item.length; ++i) {
-          console.log("UI Receiver adding item to dockarea");
-          dockarea.insertRight(extension.item[i]);
-        }
+      for (let i = 0; i < extension.item.length; ++i) {
+        dockarea.insertRight(extension.item[i]);
       }
       return new DisposableDelegate(() => {
         // TODO: remove the items from the dockarea once the API is updated.
@@ -72,27 +51,6 @@ function createUIReceiver(): IReceiver {
     isDisposed: false
   }
 }
-
-
-/**
- * The receiver for the `ui:main` extension point.
- */
-// export
-// function receiveMain(extension: IExtension): IDisposable {
-//
-// }
-
-
-/**
- * The initializer for the `ui:main` extension point.
- */
-// export
-// function initializeMain(): Promise<IDisposable> {
-//   Widget.attach(dockarea, document.body);
-//   window.onresize = () => dockarea.update();
-//   return Promise.resolve(dockarea);
-// }
-
 
 // global dockpanel
 var dockarea = new DockPanel();

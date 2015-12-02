@@ -97,13 +97,13 @@ class MenuExtensionPoint implements IReceiver, IDisposable {
    */
   add(extension: IExtension): IDisposable {
     let items: ICommandMenuItem[] = [];
-    if (extension.item && extension.item.hasOwnProperty('items')) {
-      extension.item.items.forEach((item: any) => {
+    if (extension.item) {
+      extension.item.forEach((item: any) => {
         this._commandItems.push(item);
         items.push(item);
       });
     }
-    if (extension.data && extension.data.hasOwnProperty('items')) {
+    if (extension.data) {
       extension.data.items.forEach((item: ICommandMenuItem) => {
         this._commandItems.push(item);
       });
