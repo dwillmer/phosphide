@@ -9,7 +9,7 @@
     "phosphor-disposable": "^1.0.5",
     "phosphor-dockpanel": "^0.9.3",
     "phosphor-menus": "^1.0.0-beta",
-    "phosphor-plugins": "^0.3.0",
+    "phosphor-plugins": "dwillmer/phosphor-plugins",
     "phosphor-signaling": "^1.2.0",
     "phosphor-tabs": "^1.0.0-beta.3",
     "phosphor-topsort": "^0.9.1",

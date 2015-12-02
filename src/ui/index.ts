@@ -59,7 +59,7 @@ function createUIReceiver(): IReceiver {
         // TODO: remove the items from the dockarea once the API is updated.
       });
     },
-    remove: function(id) {
+    remove: function(id: any) {
       if (id in dockarea) {
         // TODO: remove.
       }

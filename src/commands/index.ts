@@ -62,7 +62,7 @@ function createCommandReceiver(): IReceiver {
         delete commandMap[id];
       });
     },
-    remove: function(id) {
+    remove: function(id: any) {
       // TODO
     },
     dispose: function() {
