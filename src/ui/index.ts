@@ -49,7 +49,7 @@ function createUIReceiver(): IReceiver {
     add: function(extension: IExtension) {
       //console.log("UI Receiver 'add' called..." + Object.keys(extension).toString());
       console.log("UI item: " + extension.item);
-      if (extension.item && extension.hasOwnProperty('item')) {
+      if (extension.item) {
         console.log('adding...');
         //let items = extension.item.items;
         for (let i = 0; i < extension.item.length; ++i) {
