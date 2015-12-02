@@ -47,8 +47,8 @@ export
 function createUIReceiver(): IReceiver {
   return {
     add: function(extension: IExtension) {
-      console.log("UI Receiver 'add' called..." + Object.keys(extension.item).toString());
-      console.log("UI item: " + extension);
+      //console.log("UI Receiver 'add' called..." + Object.keys(extension).toString());
+      console.log("UI item: " + extension.item);
       if (extension.item && extension.item.hasOwnProperty('item')) {
         console.log('adding...');
         let items = extension.item.items;
