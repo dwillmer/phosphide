@@ -49,6 +49,7 @@
     "lib/*.css",
     "lib/*.d.ts",
     "lib/*.js",
+    "lib/*.map",
     "phosphor-plugin.json"
   ],
   "keywords": [
