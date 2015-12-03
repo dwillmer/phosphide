@@ -7,8 +7,17 @@
 |----------------------------------------------------------------------------*/
 'use strict';
 
-export * from './dockpanelreceiver';
-export * from './mainpanel';
-export * from './menubarreceiver';
-export * from './sidebar';
-export * from './sidebarreceiver';
+import expect = require('expect.js');
+
+
+describe('phosphide', () => {
+
+  describe('testing stub', () => {
+
+    it('should always pass', () => {
+
+    });
+
+  });
+
+});
