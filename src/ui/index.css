@@ -5,7 +5,7 @@
 |
 | The full license is in the file LICENSE, distributed with this software.
 |----------------------------------------------------------------------------*/
-body {
+/*body {
   margin: 0;
   padding: 0;
   background: #F5F6F7;
@@ -126,4 +126,4 @@ body {
 
 .p-Tab.p-mod-docking > span {
   line-height: 21px;
-}
+}*/

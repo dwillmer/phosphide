@@ -5,55 +5,55 @@
 |
 | The full license is in the file LICENSE, distributed with this software.
 |----------------------------------------------------------------------------*/
-'use strict';
-
-import {
-  IDisposable, DisposableDelegate
-} from 'phosphor-disposable';
-
-import {
-  DockPanel
-} from 'phosphor-dockpanel';
-
-import {
-  IExtension, IReceiver
-} from 'phosphor-plugins';
-
-import {
-  Widget
-} from 'phosphor-widget';
-
-import './index.css';
+// 'use strict';
+//
+// import {
+//   IDisposable, DisposableDelegate
+// } from 'phosphor-disposable';
+//
+// import {
+//   DockPanel
+// } from 'phosphor-dockpanel';
+//
+// import {
+//   IExtension, IReceiver
+// } from 'phosphor-plugins';
+//
+// import {
+//   Widget
+// } from 'phosphor-widget';
+//
+// import './index.css';
 
 
 /**
  * The factory function for the `ui:main` extension point.
  */
-export
-function createUIReceiver(): IReceiver {
-  return {
-    add: function(extension: IExtension) {
-      for (let i = 0; i < extension.item.length; ++i) {
-        dockarea.insertRight(extension.item[i]);
-      }
-      return new DisposableDelegate(() => {
-        // TODO: remove the items from the dockarea once the API is updated.
-      });
-    },
-    remove: function(id: any) {
-      if (id in dockarea) {
-        // TODO: remove.
-      }
-    },
-    dispose: function() {
-
-    },
-    isDisposed: false
-  }
-}
+// export
+// function createUIReceiver(): IReceiver {
+//   return {
+//     add: function(extension: IExtension) {
+//       for (let i = 0; i < extension.item.length; ++i) {
+//         dockarea.insertRight(extension.item[i]);
+//       }
+//       return new DisposableDelegate(() => {
+//         // TODO: remove the items from the dockarea once the API is updated.
+//       });
+//     },
+//     remove: function(id: any) {
+//       if (id in dockarea) {
+//         // TODO: remove.
+//       }
+//     },
+//     dispose: function() {
+//
+//     },
+//     isDisposed: false
+//   }
+// }
 
 // global dockpanel
-var dockarea = new DockPanel();
-dockarea.id = 'main';
-Widget.attach(dockarea, document.body);
-window.onresize = () => dockarea.update();
+// var dockarea = new DockPanel();
+// dockarea.id = 'main';
+// Widget.attach(dockarea, document.body);
+// window.onresize = () => dockarea.update();
