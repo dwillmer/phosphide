@@ -15,8 +15,8 @@ import {
   Property
 } from 'phosphor-properties';
 
-
-export * from './shellview/index';
+export * from './commands/index';
+//export * from './shellview/index';
 
 
 /**
