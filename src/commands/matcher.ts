@@ -15,19 +15,9 @@ import {
   ICommandItem
 } from './registry';
 
-import {
-  FuzzySearch
-} from 'fuzzysearch-js';
-
-// import * as FuzzySearch from 'fuzzysearch-js';
-
-import {
-  indexOfFS
-} from 'fuzzysearch-js/js/modules/IndexOfFS';
-
-import {
-  wordCountFS
-} from 'fuzzysearch-js/js/modules/WordCountFS';
+import * as FuzzySearch from 'fuzzysearch-js';
+import IndexOfFS = require('fuzzysearch-js/js/modules/IndexOfFS');
+import WordCountFS = require('fuzzysearch-js/js/modules/WordCountFS');
 
 
 /**
@@ -107,16 +97,16 @@ class FuzzyMatcher extends CommandMatcher {
    * should leak outside of this public API.
    */
   search(query: string, commands: ICommandItem[]): Promise<ICommandMatchResult[]> {
-    let searcher: any = (new FuzzySearch(commands, {
+    let searcher = new FuzzySearch(commands, {
       'minimumScore': 300,
       termPath: 'id'
-    })) as any;
-    searcher.addModule(indexOfFS({
+    });
+    searcher.addModule(IndexOfFS({
       'minTermLength': 3,
       'maxIterations': 500,
       'factor': 3
     }));
-    searcher.addModule(wordCountFS({
+    searcher.addModule(WordCountFS({
       'maxWordTolerance': 3,
       'factor': 1
     }));

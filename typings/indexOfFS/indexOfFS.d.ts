@@ -1,7 +1,7 @@
 
+declare function IndexOfFS(item: any): void;
+
 declare module 'fuzzysearch-js/js/modules/IndexOfFS' {
-
-  export function indexOfFS(item: any): any;
-
-
+  // function IndexOfFS(item: any): void;
+  export = IndexOfFS;
 }
