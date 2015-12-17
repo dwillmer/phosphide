@@ -81,6 +81,25 @@ export
 class FuzzyMatcher extends CommandMatcher {
 
   /**
+   * Constructs a FuzzyMatcher object.
+   */
+  constructor(primary: string, secondary: string) {
+    super();
+    this._primary = primary;
+    this._secondary = secondary;
+
+    this._ind = IndexOfFS({
+      'minTermLength': 3,
+      'maxIterations': 500,
+      'factor': 3
+    });
+    this._word = WordCountFS({
+      'maxWordTolerance': 3,
+      'factor': 1
+    });
+  }
+
+  /**
    * Execute the search with the specified string argument.
    *
    * @param query - The string to be used as the search input.
@@ -97,22 +116,24 @@ class FuzzyMatcher extends CommandMatcher {
    * should leak outside of this public API.
    */
   search(query: string, commands: ICommandItem[]): Promise<ICommandMatchResult[]> {
-    let searcher = new FuzzySearch(commands, {
+    let primarySearch = new FuzzySearch(commands, {
       'minimumScore': 300,
-      termPath: 'id'
+      'termPath': this._primary
     });
-    searcher.addModule(IndexOfFS({
-      'minTermLength': 3,
-      'maxIterations': 500,
-      'factor': 3
-    }));
-    searcher.addModule(WordCountFS({
-      'maxWordTolerance': 3,
-      'factor': 1
-    }));
+    let secondarySearch = new FuzzySearch(commands, {
+      'minimumScore': 300,
+      'termPath': this._secondary
+    });
 
-    let result = searcher.search(query);
-    return Promise.resolve(this._processResults(result));
+    primarySearch.addModule(this._ind);
+    primarySearch.addModule(this._word);
+    secondarySearch.addModule(this._ind);
+    secondarySearch.addModule(this._word);
+
+    let primaryResult = this._processResults(primarySearch.search(query));
+    let secondaryResult = secondarySearch.search(query);
+    let combined = this._mergeResults(primaryResult, secondaryResult);
+    return Promise.resolve(combined);
   }
 
   private _processResults(results: any[]): ICommandMatchResult[] {
@@ -124,9 +145,29 @@ class FuzzyMatcher extends CommandMatcher {
         originalText: res.value.id,
         command: res.value
       };
-      retval.push(res);
+      retval.push(item);
     }
     return retval;
   }
 
+  private _mergeResults(primary: ICommandMatchResult[], secondary: any[]): ICommandMatchResult[] {
+    let primaryIds = primary.map((x) => { x.command.id; });
+    for (let i = 0; i < secondary.length; ++i) {
+      let id = secondary[i].value.id;
+      let pid = primaryIds.indexOf(id);
+      if (pid > -1) {
+        primary[pid]["score"] += secondary[i].score;
+      } else {
+        primary.push(this._processResults([secondary[i]])[0]);
+      }
+    }
+    return primary;
+  }
+
+  private _primary: string;
+  private _secondary: string;
+
+  private _lev: any;
+  private _ind: any;
+  private _word: any;
 }
