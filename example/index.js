@@ -13,6 +13,7 @@ var di = require('phosphor-di');
 
 phosphide.loadPlugins(new di.Container(), [
   require('phosphide/lib/appshell/plugin'),
+  require('phosphide/lib/keymapmanager/plugin'),
   require('phosphide/lib/commandregistry/plugin'),
   require('phosphide/lib/commandpalette/plugin'),
   require('red/index'),

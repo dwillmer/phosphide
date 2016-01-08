@@ -8,7 +8,7 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette
+  IAppShell, ICommandPalette, IKeymapManager
 } from 'phosphide';
 
 import {
@@ -28,15 +28,16 @@ function resolve(container: Container): Promise<void> {
 
 class GreenHandler {
 
-  static requires = [IAppShell, ICommandPalette];
+  static requires = [IAppShell, ICommandPalette, IKeymapManager];
 
-  static create(shell: IAppShell, palette: ICommandPalette): GreenHandler {
-    return new GreenHandler(shell, palette);
+  static create(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager): GreenHandler {
+    return new GreenHandler(shell, palette, keymap);
   }
 
-  constructor(shell: IAppShell, palette: ICommandPalette) {
+  constructor(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager) {
     this._shell = shell;
     this._palette = palette;
+    this._keymap = keymap;
   }
 
   run(): void {
@@ -44,6 +45,15 @@ class GreenHandler {
     widget.addClass('green-content');
     widget.title.text = 'Green';
     this._shell.addToRightArea(widget, { rank: 40 });
+
+    this._keymap.add([
+      {
+        sequence: ['Ctrl Shift G'],
+        selector: '*',
+        command: 'demo:colors:green-0'
+      }
+    ]);
+
     this._palette.add([
       {
         text: 'All colors',
@@ -90,4 +100,5 @@ class GreenHandler {
 
   private _shell: IAppShell;
   private _palette: ICommandPalette;
+  private _keymap: IKeymapManager;
 }

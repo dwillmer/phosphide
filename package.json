@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "dependencies": {
+    "clear-cut": "^2.0.1",
     "fuzzysearch-js": "^0.1.1",
     "phosphor-arrays": "^1.0.6",
     "phosphor-boxpanel": "^1.0.0-rc.0",
@@ -13,6 +14,7 @@
     "phosphor-disposable": "^1.0.5",
     "phosphor-dockpanel": "^0.9.6",
     "phosphor-domutil": "^1.2.0",
+    "phosphor-keymap": "file:../phosphor-keymap",
     "phosphor-messaging": "^1.0.6",
     "phosphor-panel": "^1.0.0-rc.1",
     "phosphor-properties": "^2.0.0",

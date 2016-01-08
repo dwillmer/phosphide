@@ -10,4 +10,5 @@
 export * from './appshell/index';
 export * from './commandregistry/index';
 export * from './commandpalette/index';
+export * from './keymapmanager/index';
 export * from './plugin/index';

@@ -8,8 +8,12 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette
+  IAppShell, ICommandPalette, IKeymapManager, ICommandRegistry
 } from 'phosphide';
+
+import {
+  DelegateCommand
+} from 'phosphor-command';
 
 import {
   Container
@@ -28,15 +32,17 @@ function resolve(container: Container): Promise<void> {
 
 class BlueHandler {
 
-  static requires = [IAppShell, ICommandPalette];
+  static requires = [IAppShell, ICommandRegistry, ICommandPalette, IKeymapManager];
 
-  static create(shell: IAppShell, palette: ICommandPalette): BlueHandler {
-    return new BlueHandler(shell, palette);
+  static create(shell: IAppShell, registry: ICommandRegistry, palette: ICommandPalette, keymap: IKeymapManager): BlueHandler {
+    return new BlueHandler(shell, registry, palette, keymap);
   }
 
-  constructor(shell: IAppShell, palette: ICommandPalette) {
+  constructor(shell: IAppShell, registry: ICommandRegistry, palette: ICommandPalette, keymap: IKeymapManager) {
     this._shell = shell;
+    this._registry = registry;
     this._palette = palette;
+    this._keymap = keymap;
   }
 
   run(): void {
@@ -44,12 +50,30 @@ class BlueHandler {
     widget.addClass('blue-content');
     widget.title.text = 'Blue';
     this._shell.addToLeftArea(widget, { rank: 10 });
+
+    let demoColoursBlue0 = 'demo:colors:blue-0';
+
+    this._registry.add([
+      {
+        id: demoColoursBlue0,
+        command: new DelegateCommand(() => { console.log('Blue is best invoked!'); })
+      }
+    ]);
+
+    this._keymap.add([
+      {
+        sequence: ['Ctrl B'],
+        selector: '*',
+        command: demoColoursBlue0
+      }
+    ]);
+
     this._palette.add([
       {
         text: 'All colors',
         items: [
           {
-            id: 'demo:colors:blue-0',
+            id: demoColoursBlue0,
             title: 'Blue',
             caption: 'Blue is best!'
           }
@@ -89,5 +113,7 @@ class BlueHandler {
   }
 
   private _shell: IAppShell;
+  private _registry: ICommandRegistry;
   private _palette: ICommandPalette;
+  private _keymap: IKeymapManager;
 }

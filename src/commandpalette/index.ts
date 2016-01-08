@@ -19,6 +19,10 @@ import {
   Widget
 } from 'phosphor-widget';
 
+import {
+  IKeymapManager
+} from '../keymapmanager/index';
+
 
 /**
  * A group of items that can added to a command palette with headings.
@@ -78,6 +82,10 @@ interface ICommandPalette extends Widget {
    * Add new items to the command palette.
    */
   add(sections: ICommandPaletteSection[]): IDisposable;
+  /**
+   * Set the keymap manager to use for this command palette.
+   */
+  setKeymapManager(keymap: IKeymapManager): void;
 }
 
 

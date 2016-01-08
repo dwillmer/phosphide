@@ -23,6 +23,10 @@ import {
   IAppShell
 } from '../appshell/index';
 
+import {
+  IKeymapManager
+} from '../keymapmanager/index';
+
 
 /**
  * Resolve the plugin contributions.
@@ -52,18 +56,20 @@ function register(container: Container): void {
   container.register(ICommandPalette, CommandPalette);
 }
 
+
 class CommandPaletteHandler {
 
-  static requires = [IAppShell, ICommandPalette];
+  static requires = [IAppShell, ICommandPalette, IKeymapManager];
 
-  static create(shell: IAppShell, palette: CommandPalette): CommandPaletteHandler {
-    return new CommandPaletteHandler(shell, palette);
+  static create(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager): CommandPaletteHandler {
+    return new CommandPaletteHandler(shell, palette, keymap);
   }
 
-  constructor(shell: IAppShell, palette: CommandPalette) {
+  constructor(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager) {
     this._shell = shell;
     this._palette = palette;
     this._palette.title.text = 'Commands';
+    this._palette.setKeymapManager(keymap);
   }
 
   run(): void {

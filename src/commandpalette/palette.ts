@@ -38,6 +38,10 @@ import {
 } from '../commandregistry/index';
 
 import {
+  IKeymapManager
+} from '../keymapmanager/index';
+
+import {
   ICommandPalette, ICommandPaletteItem, ICommandPaletteSection
 } from './index';
 
@@ -147,6 +151,10 @@ class CommandPalette extends Widget implements ICommandPalette {
 
   }
 
+  setKeymapManager(keymap: IKeymapManager): void {
+    this._keymap = keymap;
+  }
+
   handleEvent(event: Event): void {
     switch (event.type) {
     case 'click':
@@ -239,7 +247,7 @@ class CommandPalette extends Widget implements ICommandPalette {
       target = target.parentElement;
     }
     let priv = this._registry[target.getAttribute(REGISTRATION_ID)];
-    console.log(`execute command ${priv.item.id} with args:`, priv.item.args);
+    this._commandRegistry.safeExecute(priv.item.id, priv.item.args);
   }
 
   private _evtKeyDown(event: KeyboardEvent): void {
@@ -349,8 +357,8 @@ class CommandPalette extends Widget implements ICommandPalette {
     if (priv.item.caption) {
       description.textContent = priv.item.caption;
     }
-    if (priv.item.shortcut) {
-      shortcut.textContent = priv.item.shortcut;
+    if (this._keymap.has(priv.item.id)) {
+      shortcut.textContent = this._keymap.get(priv.item.id);
     }
     command.appendChild(shortcut);
     command.appendChild(description);
@@ -430,6 +438,7 @@ class CommandPalette extends Widget implements ICommandPalette {
   }
 
   private _commandRegistry: ICommandRegistry = null;
+  private _keymap: IKeymapManager = null;
   private _sections: ICommandPaletteSectionPrivate[] = [];
   private _list: HTMLDivElement = null;
   private _search: HTMLDivElement = null;

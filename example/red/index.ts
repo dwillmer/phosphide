@@ -8,7 +8,7 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette
+  IAppShell, ICommandPalette, IKeymapManager
 } from 'phosphide';
 
 import {
@@ -28,15 +28,16 @@ function resolve(container: Container): Promise<void> {
 
 class RedHandler {
 
-  static requires = [IAppShell, ICommandPalette];
+  static requires = [IAppShell, ICommandPalette, IKeymapManager];
 
-  static create(shell: IAppShell, palette: ICommandPalette): RedHandler {
-    return new RedHandler(shell, palette);
+  static create(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager): RedHandler {
+    return new RedHandler(shell, palette, keymap);
   }
 
-  constructor(shell: IAppShell, palette: ICommandPalette) {
+  constructor(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager) {
     this._shell = shell;
     this._palette = palette;
+    this._keymap = keymap;
   }
 
   run(): void {
@@ -44,6 +45,15 @@ class RedHandler {
     widget.addClass('red-content');
     widget.title.text = 'Red';
     this._shell.addToRightArea(widget, { rank: 30 });
+
+    this._keymap.add([
+      {
+        sequence: ['Ctrl R'],
+        selector: '*',
+        command: 'demo:colors:red-0'
+      }
+    ]);
+
     this._palette.add([
       {
         text: 'All colors',
@@ -90,4 +100,5 @@ class RedHandler {
 
   private _shell: IAppShell;
   private _palette: ICommandPalette;
+  private _keymap: IKeymapManager;
 }

@@ -8,7 +8,7 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette
+  IAppShell, ICommandPalette, IKeymapManager
 } from 'phosphide';
 
 import {
@@ -28,15 +28,16 @@ function resolve(container: Container): Promise<void> {
 
 class YellowHandler {
 
-  static requires = [IAppShell, ICommandPalette];
+  static requires = [IAppShell, ICommandPalette, IKeymapManager];
 
-  static create(shell: IAppShell, palette: ICommandPalette): YellowHandler {
-    return new YellowHandler(shell, palette);
+  static create(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager): YellowHandler {
+    return new YellowHandler(shell, palette, keymap);
   }
 
-  constructor(shell: IAppShell, palette: ICommandPalette) {
+  constructor(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager) {
     this._shell = shell;
     this._palette = palette;
+    this._keymap = keymap;
   }
 
   run(): void {
@@ -44,6 +45,15 @@ class YellowHandler {
     widget.addClass('yellow-content');
     widget.title.text = 'Yellow';
     this._shell.addToLeftArea(widget, { rank: 20 });
+
+    this._keymap.add([
+      {
+        sequence: ['Alt Y'],
+        selector: '*',
+        command: 'demo:colors:yellow-0'
+      }
+    ]);
+
     this._palette.add([
       {
         text: 'All colors',
@@ -90,4 +100,5 @@ class YellowHandler {
 
   private _shell: IAppShell;
   private _palette: ICommandPalette;
+  private _keymap: IKeymapManager;
 }
