@@ -24,8 +24,8 @@ import {
 } from '../appshell/index';
 
 import {
-  IKeymapManager
-} from '../keymapmanager/index';
+  IShortcutManager
+} from '../shortcutmanager/index';
 
 
 /**
@@ -59,17 +59,17 @@ function register(container: Container): void {
 
 class CommandPaletteHandler {
 
-  static requires = [IAppShell, ICommandPalette, IKeymapManager];
+  static requires = [IAppShell, ICommandPalette, IShortcutManager];
 
-  static create(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager): CommandPaletteHandler {
+  static create(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager): CommandPaletteHandler {
     return new CommandPaletteHandler(shell, palette, keymap);
   }
 
-  constructor(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager) {
+  constructor(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager) {
     this._shell = shell;
     this._palette = palette;
     this._palette.title.text = 'Commands';
-    this._palette.setKeymapManager(keymap);
+    this._palette.setShortcutManager(shortcuts);
   }
 
   run(): void {

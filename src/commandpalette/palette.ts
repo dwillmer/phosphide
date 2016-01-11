@@ -38,8 +38,8 @@ import {
 } from '../commandregistry/index';
 
 import {
-  IKeymapManager
-} from '../keymapmanager/index';
+  IShortcutManager
+} from '../shortcutmanager/index';
 
 import {
   ICommandPalette, ICommandPaletteItem, ICommandPaletteSection
@@ -148,11 +148,10 @@ class CommandPalette extends Widget implements ICommandPalette {
       registrations.forEach(id => { this._removeItem(id); });
       this._renderAllItems();
     });
-
   }
 
-  setKeymapManager(keymap: IKeymapManager): void {
-    this._keymap = keymap;
+  setShortcutManager(shortcuts: IShortcutManager): void {
+    this._shortcuts = shortcuts;
   }
 
   handleEvent(event: Event): void {
@@ -357,8 +356,8 @@ class CommandPalette extends Widget implements ICommandPalette {
     if (priv.item.caption) {
       description.textContent = priv.item.caption;
     }
-    if (this._keymap.has(priv.item.id)) {
-      shortcut.textContent = this._keymap.get(priv.item.id);
+    if (this._shortcuts.has(priv.item.id)) {
+      shortcut.textContent = this._shortcuts.get(priv.item.id);
     }
     command.appendChild(shortcut);
     command.appendChild(description);
@@ -438,7 +437,7 @@ class CommandPalette extends Widget implements ICommandPalette {
   }
 
   private _commandRegistry: ICommandRegistry = null;
-  private _keymap: IKeymapManager = null;
+  private _shortcuts: IShortcutManager = null;
   private _sections: ICommandPaletteSectionPrivate[] = [];
   private _list: HTMLDivElement = null;
   private _search: HTMLDivElement = null;

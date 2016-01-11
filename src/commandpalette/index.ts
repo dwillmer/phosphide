@@ -20,8 +20,8 @@ import {
 } from 'phosphor-widget';
 
 import {
-  IKeymapManager
-} from '../keymapmanager/index';
+  IShortcutManager
+} from '../shortcutmanager/index';
 
 
 /**
@@ -85,7 +85,7 @@ interface ICommandPalette extends Widget {
   /**
    * Set the keymap manager to use for this command palette.
    */
-  setKeymapManager(keymap: IKeymapManager): void;
+  setShortcutManager(keymap: IShortcutManager): void;
 }
 
 
