@@ -8,10 +8,6 @@
 'use strict';
 
 import {
-  calculateSpecificity, isSelectorValid
-} from 'clear-cut';
-
-import {
   Token, Container
 } from 'phosphor-di';
 
