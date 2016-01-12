@@ -8,7 +8,7 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette, IKeymapManager
+  IAppShell, ICommandPalette, IShortcutManager
 } from 'phosphide';
 
 import {
@@ -28,16 +28,16 @@ function resolve(container: Container): Promise<void> {
 
 class YellowHandler {
 
-  static requires = [IAppShell, ICommandPalette, IKeymapManager];
+  static requires = [IAppShell, ICommandPalette, IShortcutManager];
 
-  static create(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager): YellowHandler {
-    return new YellowHandler(shell, palette, keymap);
+  static create(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager): YellowHandler {
+    return new YellowHandler(shell, palette, shortcuts);
   }
 
-  constructor(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager) {
+  constructor(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager) {
     this._shell = shell;
     this._palette = palette;
-    this._keymap = keymap;
+    this._shortcuts = shortcuts;
   }
 
   run(): void {
@@ -46,11 +46,11 @@ class YellowHandler {
     widget.title.text = 'Yellow';
     this._shell.addToLeftArea(widget, { rank: 20 });
 
-    this._keymap.add([
+    this._shortcuts.add([
       {
         sequence: ['Alt Y'],
         selector: '*',
-        command: 'demo:colors:yellow-0'
+        commandId: 'demo:colors:yellow-0'
       }
     ]);
 
@@ -100,5 +100,5 @@ class YellowHandler {
 
   private _shell: IAppShell;
   private _palette: ICommandPalette;
-  private _keymap: IKeymapManager;
+  private _shortcuts: IShortcutManager;
 }

@@ -62,7 +62,7 @@ class CommandPaletteHandler {
   static requires = [IAppShell, ICommandPalette, IShortcutManager];
 
   static create(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager): CommandPaletteHandler {
-    return new CommandPaletteHandler(shell, palette, keymap);
+    return new CommandPaletteHandler(shell, palette, shortcuts);
   }
 
   constructor(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager) {

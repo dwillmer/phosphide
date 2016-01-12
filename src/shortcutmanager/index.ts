@@ -16,7 +16,7 @@ import {
 } from 'phosphor-disposable';
 
 import {
-  IKeyboardLayout, IKeyBinding
+  IKeyBinding
 } from 'phosphor-keymap';
 
 
@@ -56,4 +56,4 @@ interface IShortcutManager {
  * The dependency token for the `ICommandRegistry` interface.
  */
 export
-const IKeymapManager = new Token<IShortcutManager>('phosphide.IShortcutManager');
+const IShortcutManager = new Token<IShortcutManager>('phosphide.IShortcutManager');

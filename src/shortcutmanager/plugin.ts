@@ -46,6 +46,7 @@ function register(container: Container): void {
 }
 
 
+export
 class ShortcutManager {
 
   static requires: Token<any>[] = [ICommandRegistry];
@@ -53,15 +54,20 @@ class ShortcutManager {
   /**
    * Create a new shortcut manager instance.
    */
-  static create(): ShortcutManager {
-    return new ShortcutManager();
+  static create(commands: ICommandRegistry): IShortcutManager {
+    return new ShortcutManager(commands);
   }
 
   /**
    * Construct a shortcut manager.
    */
-  constructor() {
-    this._keymap = new KeymapManager();
+  constructor(commands: ICommandRegistry) {
+    this._keymap = new KeymapManager(commands);
+
+    // Setup the keydown listener for the document.
+    document.addEventListener('keydown', event => {
+      this._keymap.processKeydownEvent(event);
+    });
   }
 
   /**
@@ -83,7 +89,18 @@ class ShortcutManager {
    * @returns `true` if the command is registered, `false` otherwise.
    */
   has(id: string): boolean {
+    return this._keymap.has(id);
+  }
 
+  /**
+   * Lookup a command with a specific id.
+   *
+   * @param id - The id of the command of interest.
+   *
+   * @returns The keybinding for the specified id, or `undefined`.
+   */
+  get(id: string): string {
+    return this._keymap.get(id);
   }
 
   private _keymap: KeymapManager = null;

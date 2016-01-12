@@ -8,7 +8,7 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette, IKeymapManager
+  IAppShell, ICommandPalette, IShortcutManager
 } from 'phosphide';
 
 import {
@@ -28,16 +28,16 @@ function resolve(container: Container): Promise<void> {
 
 class RedHandler {
 
-  static requires = [IAppShell, ICommandPalette, IKeymapManager];
+  static requires = [IAppShell, ICommandPalette, IShortcutManager];
 
-  static create(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager): RedHandler {
-    return new RedHandler(shell, palette, keymap);
+  static create(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager): RedHandler {
+    return new RedHandler(shell, palette, shortcuts);
   }
 
-  constructor(shell: IAppShell, palette: ICommandPalette, keymap: IKeymapManager) {
+  constructor(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager) {
     this._shell = shell;
     this._palette = palette;
-    this._keymap = keymap;
+    this._shortcuts = shortcuts;
   }
 
   run(): void {
@@ -46,11 +46,11 @@ class RedHandler {
     widget.title.text = 'Red';
     this._shell.addToRightArea(widget, { rank: 30 });
 
-    this._keymap.add([
+    this._shortcuts.add([
       {
         sequence: ['Ctrl R'],
         selector: '*',
-        command: 'demo:colors:red-0'
+        commandId: 'demo:colors:red-0'
       }
     ]);
 
@@ -100,5 +100,5 @@ class RedHandler {
 
   private _shell: IAppShell;
   private _palette: ICommandPalette;
-  private _keymap: IKeymapManager;
+  private _shortcuts: IShortcutManager;
 }

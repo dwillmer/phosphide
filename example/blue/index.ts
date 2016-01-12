@@ -8,7 +8,7 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette, IKeymapManager, ICommandRegistry
+  IAppShell, ICommandPalette, IShortcutManager, ICommandRegistry
 } from 'phosphide';
 
 import {
@@ -32,17 +32,17 @@ function resolve(container: Container): Promise<void> {
 
 class BlueHandler {
 
-  static requires = [IAppShell, ICommandRegistry, ICommandPalette, IKeymapManager];
+  static requires = [IAppShell, ICommandRegistry, ICommandPalette, IShortcutManager];
 
-  static create(shell: IAppShell, registry: ICommandRegistry, palette: ICommandPalette, keymap: IKeymapManager): BlueHandler {
-    return new BlueHandler(shell, registry, palette, keymap);
+  static create(shell: IAppShell, registry: ICommandRegistry, palette: ICommandPalette, shortcuts: IShortcutManager): BlueHandler {
+    return new BlueHandler(shell, registry, palette, shortcuts);
   }
 
-  constructor(shell: IAppShell, registry: ICommandRegistry, palette: ICommandPalette, keymap: IKeymapManager) {
+  constructor(shell: IAppShell, registry: ICommandRegistry, palette: ICommandPalette, shortcuts: IShortcutManager) {
     this._shell = shell;
     this._registry = registry;
     this._palette = palette;
-    this._keymap = keymap;
+    this._shortcuts = shortcuts;
   }
 
   run(): void {
@@ -60,11 +60,11 @@ class BlueHandler {
       }
     ]);
 
-    this._keymap.add([
+    this._shortcuts.add([
       {
         sequence: ['Ctrl B'],
         selector: '*',
-        command: demoColoursBlue0
+        commandId: demoColoursBlue0
       }
     ]);
 
@@ -115,5 +115,5 @@ class BlueHandler {
   private _shell: IAppShell;
   private _registry: ICommandRegistry;
   private _palette: ICommandPalette;
-  private _keymap: IKeymapManager;
+  private _shortcuts: IShortcutManager;
 }
