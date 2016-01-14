@@ -8,8 +8,12 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette, IShortcutManager
+  IAppShell, ICommandRegistry, ICommandPalette, IShortcutManager
 } from 'phosphide';
+
+import {
+  DelegateCommand
+} from 'phosphor-command';
 
 import {
   Container
@@ -28,14 +32,15 @@ function resolve(container: Container): Promise<void> {
 
 class GreenHandler {
 
-  static requires = [IAppShell, ICommandPalette, IShortcutManager];
+  static requires = [IAppShell, ICommandRegistry, ICommandPalette, IShortcutManager];
 
-  static create(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager): GreenHandler {
-    return new GreenHandler(shell, palette, shortcuts);
+  static create(shell: IAppShell, registry: ICommandRegistry, palette: ICommandPalette, shortcuts: IShortcutManager): GreenHandler {
+    return new GreenHandler(shell, registry, palette, shortcuts);
   }
 
-  constructor(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager) {
+  constructor(shell: IAppShell, registry: ICommandRegistry, palette: ICommandPalette, shortcuts: IShortcutManager) {
     this._shell = shell;
+    this._registry = registry;
     this._palette = palette;
     this._shortcuts = shortcuts;
   }
@@ -46,11 +51,23 @@ class GreenHandler {
     widget.title.text = 'Green';
     this._shell.addToRightArea(widget, { rank: 40 });
 
+    let greenZeroId = 'demo:colors:green-0';
+    let greenCommand = new DelegateCommand(() => {
+      console.log('Green command invoked.');
+    });
+
+    this._registry.add([
+      {
+        id: greenZeroId,
+        command: greenCommand
+      }
+    ]);
+
     this._shortcuts.add([
       {
         sequence: ['Ctrl Shift G'],
         selector: '*',
-        commandId: 'demo:colors:green-0'
+        command: greenCommand
       }
     ]);
 
@@ -59,7 +76,7 @@ class GreenHandler {
         text: 'All colors',
         items: [
           {
-            id: 'demo:colors:green-0',
+            id: greenZeroId,
             title: 'Green',
             caption: 'Green is best!'
           }
@@ -99,6 +116,7 @@ class GreenHandler {
   }
 
   private _shell: IAppShell;
+  private _registry: ICommandRegistry;
   private _palette: ICommandPalette;
   private _shortcuts: IShortcutManager;
 }

@@ -8,6 +8,10 @@
 'use strict';
 
 import {
+  ICommand
+} from 'phosphor-command';
+
+import {
   Token
 } from 'phosphor-di';
 
@@ -39,16 +43,16 @@ interface IShortcutManager {
    *
    * @returns `true` if the command is registered, `false` otherwise.
    */
-  has(id: string): boolean;
+  has(command: ICommand): boolean;
 
   /**
-   * Lookup a command with a specific id.
+   * Lookup a command.
    *
-   * @param id - The id of the command of interest.
+   * @param id - The command of interest.
    *
-   * @returns The keybinding for the specified id, or `undefined`.
+   * @returns The keybinding for the specified command, or `undefined`.
    */
-  get(id: string): string;
+  get(command: ICommand): string[];
 }
 
 

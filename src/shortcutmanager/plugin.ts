@@ -8,6 +8,10 @@
 'use strict';
 
 import {
+  ICommand
+} from 'phosphor-command';
+
+import {
   Token, Container
 } from 'phosphor-di';
 
@@ -28,6 +32,7 @@ import {
   ICommandRegistry
 } from '../commandregistry/index';
 
+
 /**
  * Register the plugin contributions.
  *
@@ -45,20 +50,20 @@ function register(container: Container): void {
 export
 class ShortcutManager {
 
-  static requires: Token<any>[] = [ICommandRegistry];
+  static requires: Token<any>[] = [];
 
   /**
    * Create a new shortcut manager instance.
    */
-  static create(commands: ICommandRegistry): IShortcutManager {
-    return new ShortcutManager(commands);
+  static create(): IShortcutManager {
+    return new ShortcutManager();
   }
 
   /**
    * Construct a shortcut manager.
    */
-  constructor(commands: ICommandRegistry) {
-    this._keymap = new KeymapManager(commands);
+  constructor() {
+    this._keymap = new KeymapManager();
 
     // Setup the keydown listener for the document.
     document.addEventListener('keydown', event => {
@@ -80,12 +85,12 @@ class ShortcutManager {
   /**
    * Test whether a command with a specific id is registered.
    *
-   * @param id - The id of the command of interest.
+   * @param command - The id of the command of interest.
    *
    * @returns `true` if the command is registered, `false` otherwise.
    */
-  has(id: string): boolean {
-    return this._keymap.has(id);
+  has(command: ICommand): boolean {
+    return this._keymap.has(command);
   }
 
   /**
@@ -95,8 +100,8 @@ class ShortcutManager {
    *
    * @returns The keybinding for the specified id, or `undefined`.
    */
-  get(id: string): string {
-    return this._keymap.get(id);
+  get(command: ICommand): string[] {
+    return this._keymap.get(command);
   }
 
   private _keymap: KeymapManager = null;

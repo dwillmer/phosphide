@@ -8,8 +8,12 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette, IShortcutManager
+  IAppShell, ICommandRegistry, ICommandPalette, IShortcutManager
 } from 'phosphide';
+
+import {
+  DelegateCommand
+} from 'phosphor-command';
 
 import {
   Container
@@ -28,15 +32,16 @@ function resolve(container: Container): Promise<void> {
 
 class YellowHandler {
 
-  static requires = [IAppShell, ICommandPalette, IShortcutManager];
+  static requires = [IAppShell, ICommandRegistry, ICommandPalette, IShortcutManager];
 
-  static create(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager): YellowHandler {
-    return new YellowHandler(shell, palette, shortcuts);
+  static create(shell: IAppShell, registry: ICommandRegistry, palette: ICommandPalette, shortcuts: IShortcutManager): YellowHandler {
+    return new YellowHandler(shell, registry, palette, shortcuts);
   }
 
-  constructor(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager) {
+  constructor(shell: IAppShell, registry: ICommandRegistry, palette: ICommandPalette, shortcuts: IShortcutManager) {
     this._shell = shell;
     this._palette = palette;
+    this._registry = registry;
     this._shortcuts = shortcuts;
   }
 
@@ -46,11 +51,23 @@ class YellowHandler {
     widget.title.text = 'Yellow';
     this._shell.addToLeftArea(widget, { rank: 20 });
 
+    let yellowZeroId = 'demo:colors:yellow-0';
+    let yellowCommand = new DelegateCommand(() => {
+      console.log('Yellow command invoked');
+    });
+
+    this._registry.add([
+      {
+        id: yellowZeroId,
+        command: yellowCommand
+      }
+    ]);
+
     this._shortcuts.add([
       {
         sequence: ['Alt Y'],
         selector: '*',
-        commandId: 'demo:colors:yellow-0'
+        command: yellowCommand
       }
     ]);
 
@@ -59,7 +76,7 @@ class YellowHandler {
         text: 'All colors',
         items: [
           {
-            id: 'demo:colors:yellow-0',
+            id: yellowZeroId,
             title: 'Yellow',
             caption: 'Yellow is best!'
           }
@@ -99,6 +116,7 @@ class YellowHandler {
   }
 
   private _shell: IAppShell;
+  private _registry: ICommandRegistry;
   private _palette: ICommandPalette;
   private _shortcuts: IShortcutManager;
 }

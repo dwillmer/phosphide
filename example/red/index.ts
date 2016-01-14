@@ -8,8 +8,12 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette, IShortcutManager
+  IAppShell, ICommandRegistry, ICommandPalette, IShortcutManager
 } from 'phosphide';
+
+import {
+  DelegateCommand
+} from 'phosphor-command';
 
 import {
   Container
@@ -28,15 +32,16 @@ function resolve(container: Container): Promise<void> {
 
 class RedHandler {
 
-  static requires = [IAppShell, ICommandPalette, IShortcutManager];
+  static requires = [IAppShell, ICommandRegistry, ICommandPalette, IShortcutManager];
 
-  static create(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager): RedHandler {
-    return new RedHandler(shell, palette, shortcuts);
+  static create(shell: IAppShell, registry: ICommandRegistry, palette: ICommandPalette, shortcuts: IShortcutManager): RedHandler {
+    return new RedHandler(shell, registry, palette, shortcuts);
   }
 
-  constructor(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager) {
+  constructor(shell: IAppShell, registry: ICommandRegistry, palette: ICommandPalette, shortcuts: IShortcutManager) {
     this._shell = shell;
     this._palette = palette;
+    this._registry = registry;
     this._shortcuts = shortcuts;
   }
 
@@ -46,11 +51,23 @@ class RedHandler {
     widget.title.text = 'Red';
     this._shell.addToRightArea(widget, { rank: 30 });
 
+    let redZeroId = 'demo:colors:red-0';
+    let redCommand = new DelegateCommand(() => {
+      console.log('Red command invoked');
+    });
+
+    this._registry.add([
+      {
+        id: redZeroId,
+        command: redCommand
+      }
+    ]);
+
     this._shortcuts.add([
       {
         sequence: ['Ctrl R'],
         selector: '*',
-        commandId: 'demo:colors:red-0'
+        command: redCommand
       }
     ]);
 
@@ -59,7 +76,7 @@ class RedHandler {
         text: 'All colors',
         items: [
           {
-            id: 'demo:colors:red-0',
+            id: redZeroId,
             title: 'Red',
             caption: 'Red is best!'
           }
@@ -99,6 +116,7 @@ class RedHandler {
   }
 
   private _shell: IAppShell;
+  private _registry: ICommandRegistry;
   private _palette: ICommandPalette;
   private _shortcuts: IShortcutManager;
 }

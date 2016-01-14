@@ -356,8 +356,10 @@ class CommandPalette extends Widget implements ICommandPalette {
     if (priv.item.caption) {
       description.textContent = priv.item.caption;
     }
-    if (this._shortcuts.has(priv.item.id)) {
-      shortcut.textContent = this._shortcuts.get(priv.item.id);
+    if (this._commandRegistry.get(priv.item.id)) {
+      let command = this._commandRegistry.get(priv.item.id);
+      let sequence = this._shortcuts.get(command);
+      shortcut.textContent = sequence.map(s => s.replace(/\s/g, '-')).join(' ');
     }
     command.appendChild(shortcut);
     command.appendChild(description);

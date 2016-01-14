@@ -52,11 +52,14 @@ class BlueHandler {
     this._shell.addToLeftArea(widget, { rank: 10 });
 
     let demoColoursBlue0 = 'demo:colors:blue-0';
+    let blueCommand = new DelegateCommand(() => {
+      console.log('Blue is best invoked!');
+    });
 
     this._registry.add([
       {
         id: demoColoursBlue0,
-        command: new DelegateCommand(() => { console.log('Blue is best invoked!'); })
+        command: blueCommand
       }
     ]);
 
@@ -64,7 +67,7 @@ class BlueHandler {
       {
         sequence: ['Ctrl B'],
         selector: '*',
-        commandId: demoColoursBlue0
+        command: blueCommand
       }
     ]);
 
