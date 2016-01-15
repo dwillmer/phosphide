@@ -19,6 +19,9 @@ import {
   Widget
 } from 'phosphor-widget';
 
+import {
+  IShortcutManager
+} from '../shortcutmanager/index';
 
 /**
  * A group of items that can added to a command palette with headings.
@@ -88,6 +91,10 @@ interface ICommandPalette extends Widget {
    * @param query - The query string
    */
   search(query: string): void;
+  /**
+   * Set the keymap manager to use for this command palette.
+   */
+  setShortcutManager(keymap: IShortcutManager): void;
 }
 
 

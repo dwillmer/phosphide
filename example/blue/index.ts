@@ -8,7 +8,7 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette, ICommandRegistry, ICommandItem
+  IAppShell, ICommandPalette, ICommandRegistry, ICommandItem, IShortcutManager
 } from 'phosphide';
 
 import {
@@ -43,32 +43,45 @@ function createCommand(id: string): ICommandItem {
 
 class BlueHandler {
 
-  static requires = [IAppShell, ICommandPalette, ICommandRegistry];
+  static requires = [IAppShell, ICommandPalette, ICommandRegistry, IShortcutManager];
 
-  static create(shell: IAppShell, palette: ICommandPalette, registry: ICommandRegistry): BlueHandler {
-    return new BlueHandler(shell, palette, registry);
+  static create(shell: IAppShell, palette: ICommandPalette, registry: ICommandRegistry, shortcuts: IShortcutManager): BlueHandler {
+    return new BlueHandler(shell, palette, registry, shortcuts);
   }
 
-  constructor(shell: IAppShell, palette: ICommandPalette, registry: ICommandRegistry) {
+  constructor(shell: IAppShell, palette: ICommandPalette, registry: ICommandRegistry, shortcuts: IShortcutManager) {
     this._shell = shell;
     this._palette = palette;
     this._registry = registry;
+    this._shortcuts = shortcuts;
   }
 
   run(): void {
     let widget = new Widget();
     widget.addClass('blue-content');
     widget.title.text = 'Blue';
+
+    let blueZeroId = 'demo:colors:blue-0';
+    let blueCommand = createCommand(blueZeroId);
     this._shell.addToLeftArea(widget, { rank: 10 });
     this._commandDisposable = this._registry.add([
-      createCommand('demo:colors:blue-0')
+      blueCommand
     ]);
+
+    this._shortcuts.add([
+      {
+        sequence: ['Ctrl B'],
+        selector: '*',
+        command: blueCommand.command
+      }
+    ]);
+
     this._palette.add([
       {
         text: 'All colors',
         items: [
           {
-            id: 'demo:colors:blue-0',
+            id: blueZeroId,
             title: 'Blue',
             caption: 'Blue is best!',
             args: 'Blue is best!'
@@ -117,4 +130,5 @@ class BlueHandler {
   private _shell: IAppShell;
   private _palette: ICommandPalette;
   private _registry: ICommandRegistry;
+  private _shortcuts: IShortcutManager;
 }

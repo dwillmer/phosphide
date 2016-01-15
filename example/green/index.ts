@@ -8,7 +8,7 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette, ICommandRegistry, ICommandItem
+  IAppShell, ICommandPalette, ICommandRegistry, ICommandItem, IShortcutManager
 } from 'phosphide';
 
 import {
@@ -43,16 +43,17 @@ function createCommand(id: string): ICommandItem {
 
 class GreenHandler {
 
-  static requires = [IAppShell, ICommandPalette, ICommandRegistry];
+  static requires = [IAppShell, ICommandPalette, ICommandRegistry, IShortcutManager];
 
-  static create(shell: IAppShell, palette: ICommandPalette, registry: ICommandRegistry): GreenHandler {
-    return new GreenHandler(shell, palette, registry);
+  static create(shell: IAppShell, palette: ICommandPalette, registry: ICommandRegistry, shortcuts: IShortcutManager): GreenHandler {
+    return new GreenHandler(shell, palette, registry, shortcuts);
   }
 
-  constructor(shell: IAppShell, palette: ICommandPalette, registry: ICommandRegistry) {
+  constructor(shell: IAppShell, palette: ICommandPalette, registry: ICommandRegistry, shortcuts: IShortcutManager) {
     this._shell = shell;
     this._palette = palette;
     this._registry = registry;
+    this._shortcuts = shortcuts;
   }
 
   run(): void {
@@ -60,20 +61,32 @@ class GreenHandler {
     widget.addClass('green-content');
     widget.title.text = 'Green';
     this._shell.addToRightArea(widget, { rank: 40 });
+
+    let greenZeroId = 'demo:colors:green-0';
+    let greenZeroCommand = createCommand(greenZeroId)
     this._commandDisposable = this._registry.add([
-      createCommand('demo:colors:green-0'),
+      greenZeroCommand,
       createCommand('demo:colors:green-1'),
       createCommand('demo:colors:green-2'),
       createCommand('demo:colors:green-3'),
       createCommand('demo:colors:green-4'),
       createCommand('demo:colors:green-5')
     ]);
+
+    this._shortcuts.add([
+      {
+        sequence: ['Ctrl Shift G'],
+        selector: '*',
+        command: greenZeroCommand.command
+      }
+    ]);
+
     this._palette.add([
       {
         text: 'All colors',
         items: [
           {
-            id: 'demo:colors:green-0',
+            id: greenZeroId,
             title: 'Green',
             caption: 'Green is best!',
             args: 'Green is best!'
@@ -122,4 +135,5 @@ class GreenHandler {
   private _shell: IAppShell;
   private _palette: ICommandPalette;
   private _registry: ICommandRegistry;
+  private _shortcuts: IShortcutManager;
 }

@@ -34,6 +34,10 @@ import {
 } from '../commandregistry/index';
 
 import {
+  IShortcutManager
+} from '../shortcutmanager/index';
+
+import {
   ICommandPalette, ICommandPaletteItem, ICommandPaletteSection
 } from './index';
 
@@ -343,6 +347,10 @@ class CommandPalette extends Widget implements ICommandPalette {
     });
   }
 
+  setShortcutManager(shortcuts: IShortcutManager): void {
+    this._shortcuts = shortcuts;
+  }
+
   /**
    * A message handler invoked on a `'after-attach'` message.
    */
@@ -401,11 +409,19 @@ class CommandPalette extends Widget implements ICommandPalette {
     let registrationID: string;
     let privSection = {
       text: section.text,
-      items: []
+      items: [],
     } as ICommandPaletteSectionPrivate;
     for (let item of section.items) {
       registrationID = `palette-${++commandID}`;
-      this._registry[registrationID] = this._privatize(item);
+      let shortcut = '';
+      if (this._commandRegistry.get(item.id)) {
+        let command = this._commandRegistry.get(item.id);
+        let sequence = this._shortcuts.get(command);
+        shortcut = sequence.map(s => s.replace(/\s/g, '-')).join(' ');
+      }
+      item.shortcut = shortcut;
+      let privateItem = this._privatize(item);
+      this._registry[registrationID] = privateItem;
       registrations.push(registrationID);
       privSection.items.push(registrationID);
     }
@@ -720,6 +736,7 @@ class CommandPalette extends Widget implements ICommandPalette {
     }));
   }
 
+  private _shortcuts: IShortcutManager = null;
   private _buffer: ICommandPaletteSectionPrivate[] = [];
   private _commandRegistry: ICommandRegistry = null;
   private _sections: ICommandPaletteSectionPrivate[] = [];
