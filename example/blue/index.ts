@@ -65,7 +65,12 @@ class BlueHandler {
     let blueCommand = createCommand(blueZeroId);
     this._shell.addToLeftArea(widget, { rank: 10 });
     this._commandDisposable = this._registry.add([
-      blueCommand
+      blueCommand,
+      createCommand('demo:colors:blue-1'),
+      createCommand('demo:colors:blue-2'),
+      createCommand('demo:colors:blue-3'),
+      createCommand('demo:colors:blue-4'),
+      createCommand('demo:colors:blue-5')
     ]);
 
     this._shortcuts.add([
@@ -92,31 +97,31 @@ class BlueHandler {
         text: 'Blue',
         items: [
           {
-            id: 'demo:colors:blue-0',
+            id: 'demo:colors:blue-1',
             title: 'Blue #1',
             caption: 'Blue number one',
             args: 'Blue number one'
           },
           {
-            id: 'demo:colors:blue-0',
+            id: 'demo:colors:blue-2',
             title: 'Blue #2',
             caption: 'Blue number two',
             args: 'Blue number two'
           },
           {
-            id: 'demo:colors:blue-0',
+            id: 'demo:colors:blue-3',
             title: 'Blue #3',
             caption: 'Blue number three',
             args: 'Blue number three'
           },
           {
-            id: 'demo:colors:blue-0',
+            id: 'demo:colors:blue-4',
             title: 'Blue #4',
             caption: 'Blue number four',
             args: 'Blue number four'
           },
           {
-            id: 'demo:colors:blue-0',
+            id: 'demo:colors:blue-5',
             title: 'Blue #5',
             caption: 'Blue number five',
             args: 'Blue number five'

@@ -79,7 +79,7 @@ class YellowHandler {
 
     this._shortcuts.add([
       {
-        sequence: ['Alt Y'],
+        sequence: ['Ctrl Y'],
         selector: '*',
         command: yellowZeroCommand.command
       }

@@ -417,7 +417,9 @@ class CommandPalette extends Widget implements ICommandPalette {
       if (this._commandRegistry.get(item.id)) {
         let command = this._commandRegistry.get(item.id);
         let sequence = this._shortcuts.get(command);
-        shortcut = sequence.map(s => s.replace(/\s/g, '-')).join(' ');
+        if (sequence) {
+          shortcut = sequence.map(s => s.replace(/\s/g, '-')).join(' ');
+        }
       }
       item.shortcut = shortcut;
       let privateItem = this._privatize(item);

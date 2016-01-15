@@ -86,7 +86,7 @@ class RedHandler {
         text: 'All colors',
         items: [
           {
-            id: 'demo:colors:red-0',
+            id: redZeroId,
             title: 'Red',
             caption: 'Red is best!',
             args: 'Red is best!'
