@@ -46,7 +46,7 @@ interface IShortcutManager {
    *
    * @returns `true` if the command is registered, `false` otherwise.
    */
-  has(command: ICommand): boolean;
+  hasCommand(command: ICommand): boolean;
 
   /**
    * Lookup a command.
@@ -55,7 +55,7 @@ interface IShortcutManager {
    *
    * @returns The keybinding for the specified command, or `undefined`.
    */
-  get(command: ICommand): string[];
+  getSequencesForCommand(command: ICommand): string[][];
 }
 
 

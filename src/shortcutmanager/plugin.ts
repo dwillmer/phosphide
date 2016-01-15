@@ -89,8 +89,8 @@ class ShortcutManager {
    *
    * @returns `true` if the command is registered, `false` otherwise.
    */
-  has(command: ICommand): boolean {
-    return this._keymap.has(command);
+  hasCommand(command: ICommand): boolean {
+    return this._keymap.hasCommand(command);
   }
 
   /**
@@ -100,8 +100,8 @@ class ShortcutManager {
    *
    * @returns The keybinding for the specified id, or `undefined`.
    */
-  get(command: ICommand): string[] {
-    return this._keymap.get(command);
+  getSequencesForCommand(command: ICommand): string[][] {
+    return this._keymap.getSequencesForCommand(command);
   }
 
   private _keymap: KeymapManager = null;
