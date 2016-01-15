@@ -663,7 +663,6 @@ class CommandPalette extends Widget implements ICommandPalette {
       let command = this._commandRegistry.get(item.id);
       let sequence = this._shortcuts.get(command);
       if (sequence) {
-        console.log('SEQUENCE: ' + sequence.toString());
         shortcut = sequence.map(s => s.replace(/\s/g, '-')).join(' ');
       }
     }
