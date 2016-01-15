@@ -24,6 +24,9 @@ import {
 } from 'phosphor-keymap';
 
 
+/**
+ * An object which manages a collection of shortcuts.
+ */
 export
 interface IShortcutManager {
 
