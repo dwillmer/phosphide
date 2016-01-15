@@ -78,7 +78,8 @@ class GreenHandler {
       {
         sequence: ['Ctrl Shift G'],
         selector: '*',
-        command: greenZeroCommand.command
+        command: greenZeroCommand.command,
+        commandArgs: greenZeroId
       }
     ]);
 

@@ -78,7 +78,8 @@ class BlueHandler {
       {
         sequence: ['Ctrl B'],
         selector: '*',
-        command: blueCommand.command
+        command: blueCommand.command,
+        commandArgs: blueZeroId
       }
     ]);
 

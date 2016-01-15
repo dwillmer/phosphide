@@ -81,7 +81,8 @@ class YellowHandler {
       {
         sequence: ['Ctrl Y'],
         selector: '*',
-        command: yellowZeroCommand.command
+        command: yellowZeroCommand.command,
+        commandArgs: yellowZeroId
       }
     ]);
 

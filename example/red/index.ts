@@ -77,7 +77,8 @@ class RedHandler {
       {
         sequence: ['Ctrl R'],
         selector: '*',
-        command: redZeroCommand.command
+        command: redZeroCommand.command,
+        commandArgs: redZeroId
       }
     ]);
 
