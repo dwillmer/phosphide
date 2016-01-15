@@ -42,9 +42,7 @@ function register(container: Container): void {
     lifetime: Lifetime.Singleton,
     requires: [ICommandRegistry, IShortcutManager],
     create: (commandRegistry: ICommandRegistry, shortcuts: IShortcutManager): ICommandPalette => {
-      let palette = new CommandPalette(commandRegistry);
-      palette.setShortcutManager(shortcuts);
-      return palette;
+      return new CommandPalette(commandRegistry, shortcuts);
     }
   });
 }

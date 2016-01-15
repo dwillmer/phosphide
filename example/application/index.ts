@@ -8,7 +8,7 @@
 'use strict';
 
 import {
-  IAppShell, ICommandPalette, IShortcutManager
+  IAppShell, ICommandPalette
 } from 'phosphide';
 
 import {
@@ -28,10 +28,9 @@ function resolve(container: Container): Promise<void> {
  */
 class Application {
 
-  static requires: Token<any>[] = [IAppShell, ICommandPalette, IShortcutManager];
+  static requires: Token<any>[] = [IAppShell, ICommandPalette];
 
-  static create(shell: IAppShell, palette: ICommandPalette, shortcuts: IShortcutManager): Application {
-    palette.setShortcutManager(shortcuts);
+  static create(shell: IAppShell, palette: ICommandPalette): Application {
     return new Application(shell, palette);
   }
 

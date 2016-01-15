@@ -91,10 +91,6 @@ interface ICommandPalette extends Widget {
    * @param query - The query string
    */
   search(query: string): void;
-  /**
-   * Set the keymap manager to use for this command palette.
-   */
-  setShortcutManager(keymap: IShortcutManager): void;
 }
 
 

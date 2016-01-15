@@ -253,10 +253,11 @@ class CommandPalette extends Widget implements ICommandPalette {
    *
    * @param commandRegistry - A command registry instance
    */
-  constructor(commandRegistry: ICommandRegistry) {
+  constructor(commandRegistry: ICommandRegistry, shortcuts: IShortcutManager) {
     super();
     this.addClass(PALETTE_CLASS);
     this._commandRegistry = commandRegistry;
+    this._shortcuts = shortcuts;
     commandRegistry.commandsAdded.connect(this._commandsUpdated, this);
     commandRegistry.commandsRemoved.connect(this._commandsUpdated, this);
   }
@@ -345,10 +346,6 @@ class CommandPalette extends Widget implements ICommandPalette {
     matcher.search(query, this._searchItems()).then(results => {
       this._bufferSearchResults(results);
     });
-  }
-
-  setShortcutManager(shortcuts: IShortcutManager): void {
-    this._shortcuts = shortcuts;
   }
 
   /**
