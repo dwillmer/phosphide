@@ -63,7 +63,8 @@ class GreenHandler {
     this._shell.addToRightArea(widget, { rank: 40 });
 
     let greenZeroId = 'demo:colors:green-0';
-    let greenZeroCommand = createCommand(greenZeroId)
+    let greenZeroCommand = createCommand(greenZeroId);
+
     this._commandDisposable = this._registry.add([
       greenZeroCommand,
       createCommand('demo:colors:green-1'),

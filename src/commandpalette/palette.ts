@@ -413,15 +413,6 @@ class CommandPalette extends Widget implements ICommandPalette {
     } as ICommandPaletteSectionPrivate;
     for (let item of section.items) {
       registrationID = `palette-${++commandID}`;
-      let shortcut = '';
-      if (this._commandRegistry.get(item.id)) {
-        let command = this._commandRegistry.get(item.id);
-        let sequence = this._shortcuts.get(command);
-        if (sequence) {
-          shortcut = sequence.map(s => s.replace(/\s/g, '-')).join(' ');
-        }
-      }
-      item.shortcut = shortcut;
       let privateItem = this._privatize(item);
       this._registry[registrationID] = privateItem;
       registrations.push(registrationID);
@@ -666,6 +657,18 @@ class CommandPalette extends Widget implements ICommandPalette {
     // By default, until the registry is checked, all added items work.
     let disabled = false;
     let visible = true;
+
+    let shortcut = '';
+    if (this._commandRegistry.get(item.id)) {
+      let command = this._commandRegistry.get(item.id);
+      let sequence = this._shortcuts.get(command);
+      if (sequence) {
+        console.log('SEQUENCE: ' + sequence.toString());
+        shortcut = sequence.map(s => s.replace(/\s/g, '-')).join(' ');
+      }
+    }
+    item.shortcut = shortcut;
+
     return { disabled, item, visible };
   }
 

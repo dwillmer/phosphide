@@ -60,10 +60,11 @@ class BlueHandler {
     let widget = new Widget();
     widget.addClass('blue-content');
     widget.title.text = 'Blue';
+    this._shell.addToLeftArea(widget, { rank: 10 });
 
     let blueZeroId = 'demo:colors:blue-0';
     let blueCommand = createCommand(blueZeroId);
-    this._shell.addToLeftArea(widget, { rank: 10 });
+
     this._commandDisposable = this._registry.add([
       blueCommand,
       createCommand('demo:colors:blue-1'),
